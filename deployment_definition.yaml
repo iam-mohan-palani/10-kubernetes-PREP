@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # For Deployment its apps/v1
+kind: Deployment
+metadata:  # Under metadata, we will add name also add a few labels, app and type and assign values to them.
+  name: nginx
+  labels:
+    app: myapp
+    type: front-end
+spec: # Spec section defines what’s inside the object we are creating.
+  selector: # Selector section helps the replicaset identify what pods fall under it. Replica set can ALSO manage pods that were not created as part of the replicaset creation. Selector is one of the major differences between replication controller and replica set.
+    matchLabels: # MatchLabels selector simply matches the labels specified under it to the labels on the PODs.
+      name: nginx
+  replicas: 3 # Input the number of replicas. Template and replicas are direct children of the spec section.
+  template: # Template section under spec to provide a POD template to be used by the replication controller to create replicas.
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          command:
+          - sh
+          - "-c"
+          - echo Hello Kubernetes! && sleep 3600 
+
+    

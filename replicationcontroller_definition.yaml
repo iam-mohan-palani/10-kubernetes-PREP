@@ -1,0 +1,18 @@
+apiVersion: v1  # The apiVersion is specific to what we are creating. RC is supported in kubernetes apiVersion v1, so its v1. The kind as we know is ReplicationController
+kind: ReplicationController
+metadata:  # Under metadata, we will add name also add a few labels, app and type and assign values to them.
+  labels:
+    app: myapp
+    type: front-end
+spec: # Spec section defines what’s inside the object we are creating.
+  template: # Template section under spec to provide a POD template to be used by the replication controller to create replicas.
+    metadata:
+        name: myapp-pod
+        labels:
+          app: myapp
+          type: front-end
+    spec:
+      containers:
+       - name: nginx-controller
+         image: nginx 
+  replicas: 3 # Input the number of replicas. Template and replicas are direct children of the spec section.
